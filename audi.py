@@ -2,7 +2,7 @@
 # Port D: Lego 22169 L Motor (servo mode for steering)
 
 # Import
-from pybricks.pupdevices import Motor, Remote, #Light
+from pybricks.pupdevices import Motor, Remote, Light
 from pybricks.parameters import Port, Direction, Stop, Button, Color
 from pybricks.hubs import TechnicHub
 from pybricks.tools import wait
