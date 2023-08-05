@@ -27,10 +27,10 @@ old_kp, old_ki, old_kd, _, _ = steer.control.pid()
 steer.control.pid(kp=old_kp*4, kd=old_kd*0.4)
 lightstatus = 0
 steertarget = 0
-steermode = 1
+steermode = 0
 drive_speed = 0
-remote.light.on(Color.GREEN)
-print('PRECISION MODE')
+remote.light.on(Color.RED)
+print('AGRESSIVE MODE')
 
 # Find the steering endpoint on the left and right.
 left_end = steer.run_until_stalled(-200, then=Stop.HOLD)
@@ -67,21 +67,21 @@ while True:
 
     # Agressive steering
     if (Button.LEFT_MINUS in pressed) and (steermode == 0):
-        steer.track_target(-steer_angle)
+        steer.run_target(speed=1400, target_angle=(-steer_angle), wait=False)
     elif (Button.LEFT_PLUS in pressed) and (steermode == 0):
-        steer.track_target(steer_angle)
+        steer.run_target(speed=1400, target_angle=(steer_angle), wait=False)
     # Reeturn To center
     else:
         if (steermode == 0):
-            steer.track_target(0)
+            steer.run_target(speed=1400, target_angle=0, wait=False)
 
     # Precision steering
     if (Button.LEFT_MINUS in pressed) and (steermode == 1) and (steertarget>(-steer_angle)):
-        steertarget = (steertarget - 1)
+        steertarget = (steertarget - 3)
         print('target angle' ,(steertarget))
         steer.run_target(1400, steertarget, Stop.HOLD, False)
     elif (Button.LEFT_PLUS in pressed) and (steermode == 1) and (steertarget<(steer_angle)):
-        steertarget = (steertarget + 1)
+        steertarget = (steertarget + 3)
         print('target angle' ,(steertarget))
         steer.run_target(1400, steertarget, Stop.HOLD, False)
 
