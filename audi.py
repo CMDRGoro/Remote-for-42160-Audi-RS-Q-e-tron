@@ -29,8 +29,7 @@ lightstatus = 0
 steertarget = 0
 steermode = 0
 drive_speed = 0
-remote.light.on(Color.RED)
-print('AGRESSIVE MODE')
+print('Calibrating')
 
 # Find the steering endpoint on the left and right.
 left_end = steer.run_until_stalled(-200, then=Stop.HOLD)
@@ -47,6 +46,8 @@ print('steer angle:',steer_angle)
 
 # Redy to Drive
 print('REDY')
+remote.light.on(Color.RED)
+print('AGRESSIVE MODE')
 while True:
     # Check which buttons are pressed.
     pressed = remote.buttons.pressed()
@@ -67,9 +68,9 @@ while True:
 
     # Agressive steering
     if (Button.LEFT_MINUS in pressed) and (steermode == 0):
-        steer.run_target(speed=1400, target_angle=(-steer_angle), wait=False)
+        steer.track_target(-steer_angle)
     elif (Button.LEFT_PLUS in pressed) and (steermode == 0):
-        steer.run_target(speed=1400, target_angle=(steer_angle), wait=False)
+        steer.track_target(steer_angle)
     # Reeturn To center
     else:
         if (steermode == 0):
